@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sign In Form</title>
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+</head>
+<body>
+<header>
+    <h1>Sign In Form</h1>
+</header>
+<main>
+    <form th:action="@{/authentication}" method="post" th:object="${signInForm}">
+        <div>
+            <label for="passport">Passport:</label>
+            <input type="text" id="passport" th:field="*{clientDTO.passport}" required/>
+        </div>
+        <div>
+            <label for="clientPassword">Password:</label>
+            <input type="password" id="clientPassword" th:field="*{passwordDTO.clientPassword}" required/>
+        </div>
+        <div>
+            <button type="submit">Login</button>
+        </div>
+        <div th:if="${error}" style="color: red;">
+            <p th:text="${error}"></p>
+        </div>
+    </form>
+    <form th:action="@{/registration}" method="get">
+        <button type="submit">Go to Registration Form</button>
+    </form>
+</main>
+</body>
+</html>

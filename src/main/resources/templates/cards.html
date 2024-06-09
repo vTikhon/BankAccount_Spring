@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Cards</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}">
+</head>
+<body>
+<h1>cards</h1>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Card Number</th>
+        <th>Card Balance</th>
+        <th>Payment System</th>
+        <th>Card Status</th>
+        <th>Account ID</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="card : ${cards}">
+        <td th:text="${card.id}">1</td>
+        <td th:text="${card.cardNumber}">09876543210987654321</td>
+        <td th:text="${card.cardBalance}">1000</td>
+        <td th:text="${card.paymentSystem}">VISA</td>
+        <td th:text="${card.cardStatus}">ACTIVE</td>
+        <td th:text="${cardAccountMap[card.id]}">1</td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

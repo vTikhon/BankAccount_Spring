@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>My Account</title>
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            var csrfToken = $('meta[name="_csrf"]').attr('content');
+            var csrfHeader = $('meta[name="_csrf_header"]').attr('content');
+
+            $('.request-close-btn').click(function() {
+                var cardNumber = $(this).data('card-number');
+                var $row = $(this).closest('tr');
+                // отправка номера карты на сервер
+                $.ajax({
+                    url: 'http://localhost:8080/requests',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({ cardNumber: cardNumber }),
+                    beforeSend: function(xhr) {
+                        xhr.setRequestHeader(csrfHeader, csrfToken);
+                    },
+                    success: function(response) {
+                        $row.find('.request-status').html('<span class="text-success">Request to close card number ' + cardNumber + ' accepted</span>');
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error:', xhr.responseText);
+                        $row.find('.request-status').html('<span class="text-danger">Error closing card number ' + cardNumber + ': ' + xhr.responseText + '</span>');
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+<div class="container">
+    <h1>Account Overview</h1>
+    <h2 th:text="${client.firstName} + ' ' + ${client.surname}">Client Name</h2>
+    <div>
+        <strong>Date of Birth:</strong> <span th:text="${client.dateOfBirth}">Date of Birth</span><br>
+        <strong>Passport:</strong> <span th:text="${client.passport}">Passport</span>
+    </div>
+    <form action="/logout" method="post" th:action="@{/logout}">
+        <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
+        <button type="submit" class="btn btn-danger">Logout</button>
+    </form>
+    <h3>Accounts and Cards</h3>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Account Number</th>
+            <th>Account Type</th>
+            <th>Account Balance</th>
+            <th>Details</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="account : ${accounts}">
+            <td th:text="${account.accountNumber ?: 'N/A'}"></td>
+            <td th:text="${account.accountType ?: 'N/A'}"></td>
+            <td th:text="${account.accountBalance ?: 'N/A'}"></td>
+            <td>
+                <table class="table table-bordered table-sm mb-0">
+                    <thead>
+                    <tr>
+                        <th>Card Number</th>
+                        <th>Card Balance</th>
+                        <th>Payment System</th>
+                        <th>Card Status</th>
+                        <th>Actions</th>
+                        <th>Request</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="card : ${cardsMap[account.id]}">
+                        <td th:text="${card.cardNumber ?: 'N/A'}"></td>
+                        <td th:text="${card.cardBalance ?: 'N/A'}"></td>
+                        <td th:text="${card.paymentSystem ?: 'N/A'}"></td>
+                        <td th:text="${card.cardStatus ?: 'N/A'}"></td>
+                        <td>
+                            <button th:if="${card.cardStatus.name() == 'ACTIVE'}"
+                                    th:data-card-number="${card.cardNumber}" class="btn btn-warning request-close-btn">Request to close</button>
+                        </td>
+                        <td class="request-status"></td>
+                    </tr>
+                    <tr th:if="${#lists.isEmpty(cardsMap[account.id])}">
+                        <td colspan="6">No cards available</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        <tr th:if="${#lists.isEmpty(accounts)}">
+            <td colspan="4">No accounts available</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

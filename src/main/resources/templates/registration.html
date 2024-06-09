@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Registration Form</title>
+  <link rel="stylesheet" type="text/css" href="/css/styles.css">
+  <script type="text/javascript">
+    function togglePaymentSystem() {
+      var accountType = document.getElementById("accountType").value;
+      var paymentSystemDiv = document.getElementById("paymentSystemDiv");
+      if (accountType === 'DEBIT' || accountType === 'CREDIT') {
+        paymentSystemDiv.style.display = 'block';
+      } else {
+        paymentSystemDiv.style.display = 'none';
+      }
+    }
+  </script>
+</head>
+<body>
+<header>
+  <h1>New Client Registration</h1>
+</header>
+<main>
+  <form th:action="@{/registration}" th:object="${registrationForm}" method="post">
+    <div>
+      <label for="client.firstName">First Name:</label>
+      <input type="text" id="client.firstName" th:field="*{clientDTO.firstName}" required />
+    </div>
+    <div>
+      <label for="client.surname">Surname:</label>
+      <input type="text" id="client.surname" th:field="*{clientDTO.surname}" required />
+    </div>
+    <div>
+      <label for="client.dateOfBirth">Date of Birth:</label>
+      <input type="date" id="client.dateOfBirth" th:field="*{clientDTO.dateOfBirth}" required />
+    </div>
+    <div>
+      <label for="client.passport">Passport:</label>
+      <input type="text" id="client.passport" th:field="*{clientDTO.passport}" required />
+    </div>
+    <div>
+      <label for="accountType">Account Type:</label>
+      <select id="accountType" th:field="*{accountDTO.accountType}" onchange="togglePaymentSystem()" required>
+        <option th:each="type : ${accountTypes}" th:value="${type}" th:text="${type}"></option>
+      </select>
+    </div>
+    <div id="paymentSystemDiv" style="display:none;">
+      <label for="paymentSystem">Payment System:</label>
+      <select id="paymentSystem" th:field="*{cardDTO.paymentSystem}" required>
+        <option th:each="system : ${paymentSystems}" th:value="${system}" th:text="${system}"></option>
+      </select>
+    </div>
+    <div>
+      <label for="password.clientPassword">Password:</label>
+      <input type="password" id="password.clientPassword" th:field="*{passwordDTO.clientPassword}" required />
+    </div>
+    <div>
+      <button type="submit">Sign Up</button>
+    </div>
+    <div th:if="${error}" style="color: red;">
+      <p th:text="${error}"></p>
+    </div>
+  </form>
+  <form th:action="@{/signin}" method="get">
+    <button type="submit">Go to Sign In Form</button>
+  </form>
+</main>
+</body>
+</html>

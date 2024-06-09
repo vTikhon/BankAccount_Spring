@@ -14,6 +14,7 @@ public interface AccountMapper {
     AccountDTO accountToAccountDTO(Account account);
 
     @Mapping(source = "clientId", target = "client.id")
+    @Mapping(target = "cards", ignore = true)
     Account accountDTOToAccount(AccountDTO accountDTO);
 
     List<AccountDTO> toAccountDTOList(List<Account> accounts);

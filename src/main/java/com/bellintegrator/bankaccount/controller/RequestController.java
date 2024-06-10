@@ -21,7 +21,6 @@ public class RequestController {
     @PostMapping("/requests")
     public ResponseEntity<String> requestCloseCard(@RequestBody Map<String, String> request) {
         String cardNumber = request.get("cardNumber");
-        System.out.println(cardNumber);  // здесь выводит текст "${card.cardNumber}"
         logger.info("Received request to close card with number: {}", cardNumber);
         try {
             CardDTO cardDTO = cardService.getCardByNumber(cardNumber);

@@ -48,7 +48,7 @@ public class RegistrationController {
     }
 
     @PostMapping("/registration")
-    public String registerClient(@ModelAttribute("registrationForm") RegistrationForm registrationForm, Model model, RedirectAttributes redirectAttributes) {
+    public String registerClient(@ModelAttribute("registrationForm") RegistrationForm registrationForm, Model model) {
         if (clientService.checkPassportNoExists(registrationForm.getClientDTO().getPassport()) != null) {
             prepareRegistrationForm(model, registrationForm, "Passport already exists.");
             return "registration";

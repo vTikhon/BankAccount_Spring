@@ -8,8 +8,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.orm.jpa.JpaTransactionManager;
@@ -21,11 +19,9 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import javax.sql.DataSource;
 
 @Configuration
-@EnableAspectJAutoProxy
 @EnableTransactionManagement
 @EnableJpaRepositories(basePackages = "com.bellintegrator.bankaccount.repository")
 @EntityScan(basePackages = "com.bellintegrator.bankaccount.model")
-@PropertySource("classpath:/application.yml")
 public class DataBaseConfig {
 
     private static final Logger logger = LoggerFactory.getLogger(DataBaseConfig.class);

@@ -18,7 +18,7 @@ import java.util.Optional;
 @Service
 public class AccountService {
 
-    private static final Logger logger = LoggerFactory.getLogger(AccountService.class);
+//    private static final Logger logger = LoggerFactory.getLogger(AccountService.class);
 
     private final AccountMapper accountMapper;
     private final AccountRepository accountRepository;
@@ -33,7 +33,7 @@ public class AccountService {
         Optional<Account> optionalAccount = accountRepository.findById(accountId);
 
         if (optionalAccount.isEmpty()) {
-            logger.error("Account with ID: {} not found", accountId);
+//            logger.error("Account with ID: {} not found", accountId);
             return;
         }
 
@@ -50,7 +50,7 @@ public class AccountService {
         }
         account.setAccountBalance(cardBalance);
         accountRepository.save(account);
-        logger.info("Updated balance for account with ID: {}", accountId);
+//        logger.info("Updated balance for account with ID: {}", accountId);
     }
 
     @Transactional(readOnly = true)
@@ -69,7 +69,7 @@ public class AccountService {
     @Transactional(readOnly = true)
     public boolean existsByAccountNumber(String accountNumber) {
         boolean isNumberExists = accountRepository.existsByAccountNumber(accountNumber);
-        logger.info("Account with number {} exists: {}", accountNumber, isNumberExists);
+//        logger.info("Account with number {} exists: {}", accountNumber, isNumberExists);
         return isNumberExists;
     }
 

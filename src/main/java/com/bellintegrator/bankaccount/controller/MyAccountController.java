@@ -20,7 +20,7 @@ import java.util.Map;
 @Controller
 public class MyAccountController {
 
-    private static final Logger logger = LoggerFactory.getLogger(MyAccountController.class);
+//    private static final Logger logger = LoggerFactory.getLogger(MyAccountController.class);
 
     @Autowired
     private ClientService clientService;
@@ -34,7 +34,7 @@ public class MyAccountController {
     public String showMyAccountFromSecurity(@RequestParam String passport, Model model) {
         ClientDTO clientDTO = clientService.getClientByPassport(passport);
         if (clientDTO == null) {
-            logger.error("Current client is null");
+//            logger.error("Current client is null");
             return "error";
         }
 

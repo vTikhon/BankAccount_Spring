@@ -17,7 +17,7 @@ import java.util.List;
 @Service
 public class CardService {
 
-    private static final Logger logger = LoggerFactory.getLogger(CardService.class);
+//    private static final Logger logger = LoggerFactory.getLogger(CardService.class);
 
     private final CardRepository cardRepository;
     private final CardMapper cardMapper;
@@ -37,7 +37,7 @@ public class CardService {
         }
 
         card.setCardBalance(newBalance);
-        logger.info("Updating balance for card number: {}", card.getCardNumber());
+//        logger.info("Updating balance for card number: {}", card.getCardNumber());
         cardRepository.saveAndFlush(card);
     }
 
@@ -46,7 +46,7 @@ public class CardService {
         Card card = cardRepository.findByCardNumber(cardNumber)
                 .orElseThrow(() -> new EntityNotFoundException("Card with number " + cardNumber + " not found"));
         card.setCardStatus(CardStatus.CLOSED);
-        logger.info("Closing card with number: {}", cardNumber);
+//        logger.info("Closing card with number: {}", cardNumber);
         cardRepository.save(card);
     }
 

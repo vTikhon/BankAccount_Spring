@@ -1,0 +1,44 @@
+services:
+  database:
+    image: postgres:latest
+    container_name: my_database
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    networks:
+      - my_network
+
+  app:
+    build: .
+    container_name: springboot_app
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://database:5432/postgres
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.postgresql.Driver
+      SPRING_JPA_DATABASE_PLATFORM: org.hibernate.dialect.PostgreSQLDialect
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_JPA_SHOW_SQL: "true"
+      SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL: "true"
+      SPRING_SQL_INIT_MODE: always
+      SPRING_SQL_INIT_SCHEMA_LOCATIONS: classpath:db/schema/schema.sql
+      SERVER_SERVLET_CONTEXT_PATH: /
+      SERVER_PORT: 8080
+    depends_on:
+      - database
+    networks:
+      - my_network
+
+networks:
+  my_network:
+    external: true
+
+volumes:
+  db_data:

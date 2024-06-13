@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class SignInController {
 
-    private static final Logger logger = LoggerFactory.getLogger(SignInController.class);
+//    private static final Logger logger = LoggerFactory.getLogger(SignInController.class);
 
     @GetMapping("/signin")
     public String showSignInForm(Model model) {

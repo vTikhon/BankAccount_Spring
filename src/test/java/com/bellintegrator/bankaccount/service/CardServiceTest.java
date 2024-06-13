@@ -13,7 +13,6 @@ import com.bellintegrator.bankaccount.model.enums.AccountType;
 import com.bellintegrator.bankaccount.model.enums.CardStatus;
 import com.bellintegrator.bankaccount.model.enums.PaymentSystem;
 import com.bellintegrator.bankaccount.repository.CardRepository;
-import com.bellintegrator.bankaccount.service.CardService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

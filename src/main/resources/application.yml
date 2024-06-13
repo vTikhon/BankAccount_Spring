@@ -3,42 +3,29 @@ spring:
     name: Task4-BankAccount
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/postgres
-    username: postgres
-    password: postgres
-    driver-class-name: org.postgresql.Driver
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+    driver-class-name: ${SPRING_DATASOURCE_DRIVER_CLASS_NAME}
 
   jpa:
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    database-platform: ${SPRING_JPA_DATABASE_PLATFORM}
     hibernate:
-      ddl-auto: update
-    show-sql: true
+      ddl-auto: ${SPRING_JPA_HIBERNATE_DDL_AUTO}
+    show-sql: ${SPRING_JPA_SHOW_SQL}
     properties:
       hibernate:
-        format_sql: true
+        format_sql: ${SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL}
+    open-in-view: false
+
   sql:
     init:
-      mode: always
-      schema-locations: classpath:db/schema/schema.sql
+      mode: ${SPRING_SQL_INIT_MODE}
+      schema-locations: ${SPRING_SQL_INIT_SCHEMA_LOCATIONS}
 
 server:
   servlet:
-    context-path: /
-  port: 8080
+    context-path: ${SERVER_SERVLET_CONTEXT_PATH}
+  port: ${SERVER_PORT}
 
-logging:
-  level:
-    org:
-      springframework:
-        orm:
-          jpa: DEBUG
-        transaction: DEBUG
-    hibernate:
-      SQL: DEBUG
-      type:
-        descriptor:
-          sql:
-            BasicBinder: TRACE
-    root: INFO
-  file:
-    name: logs/app.log
+

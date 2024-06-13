@@ -16,26 +16,26 @@ public class RequestController {
     @Autowired
     private CardService cardService;
 
-    private static final Logger logger = LoggerFactory.getLogger(RequestController.class);
+//    private static final Logger logger = LoggerFactory.getLogger(RequestController.class);
 
     @PostMapping("/requests")
     public ResponseEntity<String> requestCloseCard(@RequestBody Map<String, String> request) {
         String cardNumber = request.get("cardNumber");
-        logger.info("Received request to close card with number: {}", cardNumber);
+//        logger.info("Received request to close card with number: {}", cardNumber);
         try {
             CardDTO cardDTO = cardService.getCardByNumber(cardNumber);
             if (cardDTO == null) {
-                logger.warn("Card with number {} not found", cardNumber);
+//                logger.warn("Card with number {} not found", cardNumber);
                 throw new EntityNotFoundException();
             }
             cardService.closeCard(cardNumber);
-            logger.info("Successfully closed card with number: {}", cardDTO.getCardNumber());
+//            logger.info("Successfully closed card with number: {}", cardDTO.getCardNumber());
             return ResponseEntity.ok("Request to close card is accepted. Card Number: " + cardDTO.getCardNumber());
         } catch (EntityNotFoundException e) {
-            logger.error("Card not found with number: {}", cardNumber, e);
+//            logger.error("Card not found with number: {}", cardNumber, e);
             return ResponseEntity.status(404).body("Card not found");
         } catch (Exception e) {
-            logger.error("An error occurred while processing the request for card number: {}", cardNumber, e);
+//            logger.error("An error occurred while processing the request for card number: {}", cardNumber, e);
             return ResponseEntity.status(500).body("An error occurred while processing the request");
         }
     }

@@ -27,7 +27,7 @@ import java.math.BigDecimal;
 @Controller
 public class RegistrationController {
 
-    private static final Logger logger = LoggerFactory.getLogger(RegistrationController.class);
+//    private static final Logger logger = LoggerFactory.getLogger(RegistrationController.class);
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -70,7 +70,7 @@ public class RegistrationController {
     }
 
     private void creatingNewClient(RegistrationForm registrationForm) {
-        logger.info("Registering new client with passport: {}", registrationForm.getClientDTO().getPassport());
+//        logger.info("Registering new client with passport: {}", registrationForm.getClientDTO().getPassport());
         RegistrationForm newRegistrationForm = new RegistrationForm();
         newRegistrationForm.setClientDTO(registrationForm.getClientDTO());
         newRegistrationForm.setPasswordDTO(registrationForm.getPasswordDTO());

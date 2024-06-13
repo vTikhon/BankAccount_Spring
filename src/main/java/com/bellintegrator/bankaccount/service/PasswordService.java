@@ -13,7 +13,7 @@ import java.util.List;
 @Service
 public class PasswordService {
 
-    private static final Logger logger = LoggerFactory.getLogger(PasswordService.class);
+//    private static final Logger logger = LoggerFactory.getLogger(PasswordService.class);
 
     private final PasswordMapper passwordMapper;
     private final PasswordRepository passwordRepository;
@@ -25,19 +25,19 @@ public class PasswordService {
 
     @Transactional
     public PasswordDTO createPassword(PasswordDTO passwordDTO) {
-        logger.debug("Attempting to create a new password");
+//        logger.debug("Attempting to create a new password");
         if (passwordDTO == null || passwordDTO.getClientPassword() == null || passwordDTO.getClientPassword().isEmpty()) {
-            logger.error("Password cannot be null or empty");
+//            logger.error("Password cannot be null or empty");
             throw new IllegalArgumentException("Password cannot be null or empty");
         }
         if (passwordDTO.getClientId() == null) {
-            logger.error("Client_id cannot be null or empty");
+//            logger.error("Client_id cannot be null or empty");
             throw new IllegalArgumentException("Client_id cannot be null or empty");
         }
 
         Password password = passwordMapper.passwordDTOToPassword(passwordDTO);
         passwordRepository.save(password);
-        logger.info("Password created with ID: {}", password.getId());
+//        logger.info("Password created with ID: {}", password.getId());
         return passwordMapper.passwordToPasswordDTO(password);
     }
 

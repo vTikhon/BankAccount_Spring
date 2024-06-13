@@ -17,7 +17,7 @@ import java.util.List;
 @Service
 public class ClientService {
 
-    private static final Logger logger = LoggerFactory.getLogger(ClientService.class);
+//    private static final Logger logger = LoggerFactory.getLogger(ClientService.class);
 
     private final ClientMapper clientMapper;
     private final ClientRepository clientRepository;
@@ -30,7 +30,7 @@ public class ClientService {
 
     @Transactional(readOnly = true)
     public List<ClientDTO> getAllClients() {
-        logger.info("Fetching all clients");
+//        logger.info("Fetching all clients");
         List<Client> clients = clientRepository.findAll();
         List<ClientDTO> clientDTOs = new ArrayList<>();
         for (Client client : clients) {
@@ -44,17 +44,17 @@ public class ClientService {
         validateClient(clientDTO);
         Client client = clientMapper.clientDTOToClient(clientDTO);
         clientRepository.save(client);
-        logger.info("Client created with ID: {}", client.getId());
+//        logger.info("Client created with ID: {}", client.getId());
         return clientMapper.clientToClientDTO(client);
     }
 
     @Transactional(readOnly = true)
     public ClientDTO getClientByPassport(String passport) {
-        logger.info("Fetching client with passport: {}", passport);
+//        logger.info("Fetching client with passport: {}", passport);
         Client client = clientRepository.findByPassport(passport)
                 .orElseThrow(() -> {
                     String errorMessage = "Client with passport " + passport + " not found";
-                    logger.error(errorMessage);
+//                    logger.error(errorMessage);
                     return new EntityNotFoundException(errorMessage);
                 });
         return clientMapper.clientToClientDTO(client);
@@ -62,7 +62,7 @@ public class ClientService {
 
     @Transactional(readOnly = true)
     public ClientDTO checkPassportNoExists(String passport) {
-        logger.info("Checking if passport exists: {}", passport);
+//        logger.info("Checking if passport exists: {}", passport);
         Client client = clientRepository.findByPassport(passport)
                 .orElse(null);
         if (client != null) {
